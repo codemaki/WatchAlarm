@@ -3,7 +3,7 @@ import UIKit
 import UserNotifications
 
 @main
-struct WatchAlarmApp: App {
+struct GAlarmApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
 
     var body: some Scene {

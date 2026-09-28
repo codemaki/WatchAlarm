@@ -2,7 +2,7 @@
 # App Store 제출용 아카이브 + .ipa 생성
 #   ./scripts/archive.sh            → build/GAlarm.xcarchive, build/export/*.ipa 생성
 #   ./scripts/archive.sh --upload   → 생성 후 App Store Connect 로 업로드 (Xcode 에 로그인된 계정 사용)
-# 업로드 전에 App Store Connect 에 앱 레코드(번들 ID com.codemaki.WatchAlarm)가 있어야 한다.
+# 업로드 전에 App Store Connect 에 앱 레코드(번들 ID com.gonmmu.GAlarm)가 있어야 한다.
 set -euo pipefail
 
 cd "$(dirname "$0")/.."
@@ -16,8 +16,8 @@ xcodegen generate
 
 rm -rf "$ARCHIVE" "$EXPORT_DIR"
 xcodebuild archive \
-  -project WatchAlarm.xcodeproj \
-  -scheme WatchAlarm \
+  -project GAlarm.xcodeproj \
+  -scheme GAlarm \
   -configuration Release \
   -destination 'generic/platform=iOS' \
   -archivePath "$ARCHIVE" \

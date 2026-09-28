@@ -12,13 +12,13 @@
 | 버전 | `project.yml`의 `MARKETING_VERSION`(1.0) / `CURRENT_PROJECT_VERSION`(1) |
 | 아카이브 | `scripts/archive.sh` (+ `ExportOptions.plist`, method `app-store-connect`) |
 
-Bundle ID는 기존 그대로입니다(`com.codemaki.WatchAlarm`, `.watchkitapp`, `.watchkitapp.widget`). 바꾸면 App Group/서명을 다시 만들어야 하고, 사용자에게는 보이지 않으므로 유지합니다.
+Bundle ID는 기존 그대로입니다(`com.gonmmu.GAlarm`, `.watchkitapp`, `.watchkitapp.widget`). 바꾸면 App Group/서명을 다시 만들어야 하고, 사용자에게는 보이지 않으므로 유지합니다.
 
 ## 2. 직접 해야 하는 것 (App Store Connect)
 
 1. **앱 레코드 생성**: [App Store Connect](https://appstoreconnect.apple.com) → 앱 → ＋ 신규 앱
    - 플랫폼: iOS / 이름: `GAlarm` (이미 사용 중인 이름이면 `GAlarm - 워치 충전 알림` 등으로 변경)
-   - 기본 언어: 한국어 / 번들 ID: `com.codemaki.WatchAlarm` / SKU: `galarm-001`
+   - 기본 언어: 한국어 / 번들 ID: `com.gonmmu.GAlarm` / SKU: `galarm-001`
 2. **빌드 업로드**
    ```bash
    ./scripts/archive.sh --upload

@@ -1,6 +1,6 @@
-name: WatchAlarm
+name: GAlarm
 options:
-  bundleIdPrefix: com.codemaki
+  bundleIdPrefix: com.gonmmu
   developmentLanguage: ko
   deploymentTarget:
     iOS: "26.0"
@@ -17,15 +17,15 @@ settings:
     CURRENT_PROJECT_VERSION: "1"
 targets:
   # iOS 컴패니언 앱
-  WatchAlarm:
+  GAlarm:
     type: application
     platform: iOS
     sources: [iOS, Shared, SharedApp]
     dependencies:
-      - target: WatchAlarmWatch
+      - target: GAlarmWatch
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.codemaki.WatchAlarm
+        PRODUCT_BUNDLE_IDENTIFIER: com.gonmmu.GAlarm
         TARGETED_DEVICE_FAMILY: "1"
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
     info:
@@ -39,22 +39,21 @@ targets:
         UILaunchScreen: {}
         UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait]
     entitlements:
-      path: iOS/WatchAlarm.entitlements
+      path: iOS/GAlarm.entitlements
       properties:
-        com.apple.security.application-groups: [group.com.codemaki.watchalarm]
+        com.apple.security.application-groups: [group.com.gonmmu.galarm]
         com.apple.developer.usernotifications.time-sensitive: true
 
   # watchOS 앱 (단일 타깃 워치 앱)
-  WatchAlarmWatch:
+  GAlarmWatch:
     type: application
     platform: watchOS
     sources: [Watch, Shared, SharedApp]
     dependencies:
-      - target: WatchAlarmWidget
+      - target: GAlarmWidget
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.codemaki.WatchAlarm.watchkitapp
-        PRODUCT_NAME: WatchAlarmWatch
+        PRODUCT_BUNDLE_IDENTIFIER: com.gonmmu.GAlarm.watchkitapp
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
     info:
       path: Watch/Info.plist
@@ -64,20 +63,20 @@ targets:
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
         ITSAppUsesNonExemptEncryption: false
         WKApplication: true
-        WKCompanionAppBundleIdentifier: com.codemaki.WatchAlarm
+        WKCompanionAppBundleIdentifier: com.gonmmu.GAlarm
     entitlements:
-      path: Watch/WatchAlarmWatch.entitlements
+      path: Watch/GAlarmWatch.entitlements
       properties:
-        com.apple.security.application-groups: [group.com.codemaki.watchalarm]
+        com.apple.security.application-groups: [group.com.gonmmu.galarm]
 
   # WidgetKit 컴플리케이션 (watchOS)
-  WatchAlarmWidget:
+  GAlarmWidget:
     type: app-extension
     platform: watchOS
     sources: [Widget, Shared]
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.codemaki.WatchAlarm.watchkitapp.widget
+        PRODUCT_BUNDLE_IDENTIFIER: com.gonmmu.GAlarm.watchkitapp.widget
     info:
       path: Widget/Info.plist
       properties:
@@ -87,22 +86,22 @@ targets:
         NSExtension:
           NSExtensionPointIdentifier: com.apple.widgetkit-extension
     entitlements:
-      path: Widget/WatchAlarmWidget.entitlements
+      path: Widget/GAlarmWidget.entitlements
       properties:
-        com.apple.security.application-groups: [group.com.codemaki.watchalarm]
+        com.apple.security.application-groups: [group.com.gonmmu.galarm]
 
 schemes:
-  WatchAlarm:
+  GAlarm:
     build:
       targets:
-        WatchAlarm: all
+        GAlarm: all
     run:
       config: Debug
     archive:
       config: Release
-  WatchAlarmWatch:
+  GAlarmWatch:
     build:
       targets:
-        WatchAlarmWatch: all
+        GAlarmWatch: all
     run:
       config: Debug

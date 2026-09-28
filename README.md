@@ -7,16 +7,16 @@
 XcodeGen(`project.yml`)으로 `.xcodeproj`를 생성합니다. `.xcodeproj`는 git에 넣지 않습니다.
 
 ```bash
-xcodegen generate && open WatchAlarm.xcodeproj
+xcodegen generate && open GAlarm.xcodeproj
 ```
 
 | 타깃 | 플랫폼 | Bundle ID | 소스 |
 |---|---|---|---|
-| `WatchAlarm` | iOS 26 | `com.codemaki.WatchAlarm` | iOS, Shared, SharedApp |
-| `WatchAlarmWatch` | watchOS 26 | `com.codemaki.WatchAlarm.watchkitapp` | Watch, Shared, SharedApp |
-| `WatchAlarmWidget` | watchOS 26 (WidgetKit ext) | `com.codemaki.WatchAlarm.watchkitapp.widget` | Widget, Shared |
+| `GAlarm` | iOS 26 | `com.gonmmu.GAlarm` | iOS, Shared, SharedApp |
+| `GAlarmWatch` | watchOS 26 | `com.gonmmu.GAlarm.watchkitapp` | Watch, Shared, SharedApp |
+| `GAlarmWidget` | watchOS 26 (WidgetKit ext) | `com.gonmmu.GAlarm.watchkitapp.widget` | Widget, Shared |
 
-임베드 구조: `WatchAlarm.app/Watch/WatchAlarmWatch.app/PlugIns/WatchAlarmWidget.appex`
+임베드 구조: `GAlarm.app/Watch/GAlarmWatch.app/PlugIns/GAlarmWidget.appex`
 
 ```
 Shared/            모든 타깃 공용 (위젯 포함)
@@ -31,7 +31,7 @@ SharedApp/         iOS + watchOS 앱 공용
   LocalNotifier.swift    로컬 알림 + 포그라운드 배너 delegate
   LogListView.swift      로그 화면 (wake 간격 "+n분" 표시, 초기화 버튼)
 Watch/
-  WatchAlarmWatchApp.swift   @main, .backgroundTask(.appRefresh / .watchConnectivity)
+  GAlarmWatchApp.swift   @main, .backgroundTask(.appRefresh / .watchConnectivity)
   BatteryReader.swift        WKInterfaceDevice 배터리 읽기
   ChargeTracker.swift        알림 조건, 충전속도 추정, 다음 refresh 시각 계산
   RefreshScheduler.swift     scheduleBackgroundRefresh
@@ -41,7 +41,7 @@ Watch/
   WatchModel.swift           확인 흐름 전체 조율
   WatchViews.swift           상태 / 설정 / 테스트 알림
 iOS/
-  WatchAlarmApp.swift        @main + AppDelegate (백그라운드 실행 시 WCSession 활성화)
+  GAlarmApp.swift        @main + AppDelegate (백그라운드 실행 시 WCSession 활성화)
   PhoneSessionManager.swift  WCSession (아이폰), 알림 수신 → 로컬 알림, 중복 제거
   PhoneViews.swift           임계값, Webhook, 알림 권한, 로그
 Widget/
@@ -52,16 +52,16 @@ Widget/
 
 | 타깃 | Capability |
 |---|---|
-| iOS | App Groups `group.com.codemaki.watchalarm`, Time Sensitive Notifications |
-| Watch | App Groups `group.com.codemaki.watchalarm` |
-| Widget | App Groups `group.com.codemaki.watchalarm` |
+| iOS | App Groups `group.com.gonmmu.galarm`, Time Sensitive Notifications |
+| Watch | App Groups `group.com.gonmmu.galarm` |
+| Widget | App Groups `group.com.gonmmu.galarm` |
 
 - App Group은 **같은 기기 안에서만** 공유됩니다(워치 앱 ↔ 컴플리케이션). 워치 ↔ 아이폰은 WCSession으로 동기화합니다.
 - 백그라운드 모드(`UIBackgroundModes`, `WKBackgroundModes`)는 **필요 없습니다.** watchOS 백그라운드 app refresh와 WCSession의 아이폰 백그라운드 실행에는 별도 모드가 필요하지 않습니다.
 
 ### Info.plist 주요 항목
 
-- Watch: `WKApplication = YES`, `WKCompanionAppBundleIdentifier = com.codemaki.WatchAlarm`
+- Watch: `WKApplication = YES`, `WKCompanionAppBundleIdentifier = com.gonmmu.GAlarm`
 - Widget: `NSExtension.NSExtensionPointIdentifier = com.apple.widgetkit-extension`
 - iOS: `UILaunchScreen`
 
@@ -69,7 +69,7 @@ Widget/
 
 1. **Signing**: `project.yml`에 Team `W345C6H54N` / Automatic signing으로 설정되어 있습니다. Xcode에서 세 타깃 모두 Signing & Capabilities에 오류가 없는지 확인하세요. App Group ID는 자동 서명 시 Developer 계정에 자동 등록됩니다.
    - Time Sensitive 알림 capability 때문에 서명이 실패하면 `project.yml`의 `com.apple.developer.usernotifications.time-sensitive` 줄을 지우고 다시 `xcodegen generate` 하세요(알림은 일반 수준으로 동작).
-2. **설치**: 아이폰을 연결하고 `WatchAlarm` 스킴을 실행하면 워치 앱도 같이 설치됩니다. 워치에 바로 설치하려면 `WatchAlarmWatch` 스킴을 선택하고 워치를 대상으로 실행하세요. 워치/아이폰 모두 개발자 모드가 켜져 있어야 합니다.
+2. **설치**: 아이폰을 연결하고 `GAlarm` 스킴을 실행하면 워치 앱도 같이 설치됩니다. 워치에 바로 설치하려면 `GAlarmWatch` 스킴을 선택하고 워치를 대상으로 실행하세요. 워치/아이폰 모두 개발자 모드가 켜져 있어야 합니다.
 3. **알림 권한 요청 흐름**
    - 아이폰: 앱 첫 실행 시 요청. 화면의 "알림 권한" 섹션에서 상태 확인, 거부된 경우 "설정 앱 열기".
    - 워치: 워치 앱 첫 실행 시 요청 (2순위 경로인 워치 로컬 알림에 필요).

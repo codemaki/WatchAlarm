@@ -1,7 +1,7 @@
 import Foundation
 
 enum AppConstants {
-    static let appGroupID = "group.com.codemaki.watchalarm"
+    static let appGroupID = "group.com.gonmmu.galarm"
     static let defaultThreshold = 80
     static let thresholdRange = 50...100
     /// 배터리가 (임계값 - resetMargin) 미만으로 내려가면 알림 상태를 초기화한다.

@@ -3,7 +3,7 @@ import UserNotifications
 import WatchKit
 
 @main
-struct WatchAlarmWatchApp: App {
+struct GAlarmWatchApp: App {
     @WKApplicationDelegateAdaptor(WatchAppDelegate.self) private var appDelegate
 
     var body: some Scene {
