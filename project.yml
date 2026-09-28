@@ -1,6 +1,7 @@
 name: WatchAlarm
 options:
   bundleIdPrefix: com.codemaki
+  developmentLanguage: ko
   deploymentTarget:
     iOS: "26.0"
     watchOS: "26.0"
@@ -11,6 +12,7 @@ settings:
     CODE_SIGN_STYLE: Automatic
     SWIFT_VERSION: "6.0"
     SWIFT_STRICT_CONCURRENCY: complete
+    # 앱 버전 (App Store Connect 에 올릴 때마다 CURRENT_PROJECT_VERSION 을 올려야 함)
     MARKETING_VERSION: "1.0"
     CURRENT_PROJECT_VERSION: "1"
 targets:
@@ -25,10 +27,15 @@ targets:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.codemaki.WatchAlarm
         TARGETED_DEVICE_FAMILY: "1"
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
     info:
       path: iOS/Info.plist
       properties:
-        CFBundleDisplayName: 워치충전알림
+        CFBundleDisplayName: GAlarm
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        LSApplicationCategoryType: public.app-category.utilities
+        ITSAppUsesNonExemptEncryption: false
         UILaunchScreen: {}
         UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait]
     entitlements:
@@ -48,10 +55,14 @@ targets:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.codemaki.WatchAlarm.watchkitapp
         PRODUCT_NAME: WatchAlarmWatch
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
     info:
       path: Watch/Info.plist
       properties:
-        CFBundleDisplayName: 충전알림
+        CFBundleDisplayName: GAlarm
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        ITSAppUsesNonExemptEncryption: false
         WKApplication: true
         WKCompanionAppBundleIdentifier: com.codemaki.WatchAlarm
     entitlements:
@@ -70,10 +81,28 @@ targets:
     info:
       path: Widget/Info.plist
       properties:
-        CFBundleDisplayName: 충전알림
+        CFBundleDisplayName: GAlarm
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
         NSExtension:
           NSExtensionPointIdentifier: com.apple.widgetkit-extension
     entitlements:
       path: Widget/WatchAlarmWidget.entitlements
       properties:
         com.apple.security.application-groups: [group.com.codemaki.watchalarm]
+
+schemes:
+  WatchAlarm:
+    build:
+      targets:
+        WatchAlarm: all
+    run:
+      config: Debug
+    archive:
+      config: Release
+  WatchAlarmWatch:
+    build:
+      targets:
+        WatchAlarmWatch: all
+    run:
+      config: Debug

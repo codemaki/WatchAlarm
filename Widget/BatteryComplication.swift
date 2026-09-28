@@ -86,7 +86,7 @@ struct BatteryComplication: Widget {
             BatteryComplicationView(entry: entry)
                 .containerBackground(for: .widget) { Color.clear }
         }
-        .configurationDisplayName("워치 충전 알림")
+        .configurationDisplayName("GAlarm")
         .description("현재 배터리와 알림 임계값")
         .supportedFamilies([.accessoryCircular, .accessoryRectangular, .accessoryInline, .accessoryCorner])
     }

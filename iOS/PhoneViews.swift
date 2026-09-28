@@ -70,7 +70,7 @@ struct PhoneRootView: View {
                     NavigationLink("로그") { LogListView() }
                 }
             }
-            .navigationTitle("워치 충전 알림")
+            .navigationTitle("GAlarm")
         }
         .task { await requestAuth() }
         .onAppear { webhookDraft = session.webhookURL }

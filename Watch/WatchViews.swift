@@ -44,7 +44,7 @@ struct WatchRootView: View {
                 }
                 .font(.footnote)
             }
-            .navigationTitle("충전알림")
+            .navigationTitle("GAlarm")
         }
         .task {
             await LocalNotifier.requestAuthorization()
