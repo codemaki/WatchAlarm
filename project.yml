@@ -1,0 +1,79 @@
+name: WatchAlarm
+options:
+  bundleIdPrefix: com.codemaki
+  deploymentTarget:
+    iOS: "26.0"
+    watchOS: "26.0"
+  createIntermediateGroups: true
+settings:
+  base:
+    DEVELOPMENT_TEAM: W345C6H54N
+    CODE_SIGN_STYLE: Automatic
+    SWIFT_VERSION: "6.0"
+    SWIFT_STRICT_CONCURRENCY: complete
+    MARKETING_VERSION: "1.0"
+    CURRENT_PROJECT_VERSION: "1"
+targets:
+  # iOS 컴패니언 앱
+  WatchAlarm:
+    type: application
+    platform: iOS
+    sources: [iOS, Shared, SharedApp]
+    dependencies:
+      - target: WatchAlarmWatch
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.codemaki.WatchAlarm
+        TARGETED_DEVICE_FAMILY: "1"
+    info:
+      path: iOS/Info.plist
+      properties:
+        CFBundleDisplayName: 워치충전알림
+        UILaunchScreen: {}
+        UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait]
+    entitlements:
+      path: iOS/WatchAlarm.entitlements
+      properties:
+        com.apple.security.application-groups: [group.com.codemaki.watchalarm]
+        com.apple.developer.usernotifications.time-sensitive: true
+
+  # watchOS 앱 (단일 타깃 워치 앱)
+  WatchAlarmWatch:
+    type: application
+    platform: watchOS
+    sources: [Watch, Shared, SharedApp]
+    dependencies:
+      - target: WatchAlarmWidget
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.codemaki.WatchAlarm.watchkitapp
+        PRODUCT_NAME: WatchAlarmWatch
+    info:
+      path: Watch/Info.plist
+      properties:
+        CFBundleDisplayName: 충전알림
+        WKApplication: true
+        WKCompanionAppBundleIdentifier: com.codemaki.WatchAlarm
+    entitlements:
+      path: Watch/WatchAlarmWatch.entitlements
+      properties:
+        com.apple.security.application-groups: [group.com.codemaki.watchalarm]
+
+  # WidgetKit 컴플리케이션 (watchOS)
+  WatchAlarmWidget:
+    type: app-extension
+    platform: watchOS
+    sources: [Widget, Shared]
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.codemaki.WatchAlarm.watchkitapp.widget
+    info:
+      path: Widget/Info.plist
+      properties:
+        CFBundleDisplayName: 충전알림
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.widgetkit-extension
+    entitlements:
+      path: Widget/WatchAlarmWidget.entitlements
+      properties:
+        com.apple.security.application-groups: [group.com.codemaki.watchalarm]
